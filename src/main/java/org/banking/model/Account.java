@@ -1,15 +1,12 @@
 package org.banking.model;
 
-import org.banking.interfaces.IDeposit;
-import org.banking.interfaces.IOperations;
-import org.banking.interfaces.IPrintStatement;
-import org.banking.interfaces.IWithdraw;
+import org.banking.interfaces.*;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Account {
+public class Account implements IAccount {
 
     private Map<Instant, IOperations> operations;
     private IWithdraw withdrawService;
@@ -28,15 +25,15 @@ public class Account {
     public Account(Map<Instant, IOperations> operationsMap) {
         operations = operationsMap;
     }
-
+    @Override
     public void deposit(int value){
         operations = depositService.proceed(value, operations);
     }
-
+    @Override
     public void withdraw(int value){
         operations = withdrawService.proceed(value, operations);
     }
-
+    @Override
     public String printStatement(){
         return printStatementService.printStatement(operations);
     }
